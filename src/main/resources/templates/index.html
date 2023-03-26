@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>TODO List</h1>
+<form method="post">
+    내용 : <input type="text" id="content" name="content">
+    <input type="submit" value="저장">
+</form>
+<table>
+    <thead>
+    <tr>
+        <td>번호</td>
+        <td>내용</td>
+        <td>시간</td>
+        <td>결과</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="todoEntity : ${todoList}">
+        <td th:text="${todoEntity.seq}"></td>
+        <td th:text="${todoEntity.content}"></td>
+        <td th:text="${todoEntity.date}"></td>
+        <form method="post" action="/done">
+            <input type="text" name="seq" th:value="${todoEntity.seq}" readonly="readonly" hidden="hidden">
+            <td><input type="submit" th:value="${todoEntity.done ? '완료' : '미완료'}"></td>
+        </form>
+        <form method="post" action="/delete">
+            <input type="text" name="seq" th:value="${todoEntity.seq}" readonly="readonly" hidden="hidden">
+            <td><input type="submit" th:value="삭제"></td>
+        </form>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
